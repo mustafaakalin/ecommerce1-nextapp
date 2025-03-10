@@ -1,26 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@plugin "daisyui" {
+  themes: all;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes slide-left {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Truck sliding animation for shipping badge */
+@keyframes slideRight {
+    0% {
+        transform: translateX(-20px);
+    }
+    50% {
+        transform: translateX(5px);
+    }
+    100% {
+        transform: translateX(-20px);
+    }
+}
+
+.animate-slide-left {
+  animation: slide-left 0.3s ease-out forwards;
+}
+
+/* Dropdown menu transitions */
+.menu details > ul {
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.3s ease-out, opacity 0.2s ease-out;
+}
+
+.menu details[open] > ul {
+  max-height: 500px;
+  opacity: 1;
+}
+
+/* Hover effects for menu items */
+.menu li > *:not(ul):not(details):hover,
+.menu li > details > summary:hover {
+  @apply bg-base-300;
+}
+
+/* Sub-menu positioning */
+.menu :where(li:not(.menu-title) > details > ul) {
+  position: absolute;
+  left: 100%;
+  top: 0%;
+}
+
+/* Custom Swiper Styles */
+.swiper-pagination {
+  position: absolute;
+  bottom: 8px !important;
+  z-index: 30;
+}
+
+.swiper-pagination-bullet {
+  width: 6px !important;
+  height: 6px !important;
+  margin: 0 3px !important;
+  transition: all 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+  width: 16px !important;
+  border-radius: 4px !important;
+}
+
+/* Gradient overlay for product card images */
+.product-card-image-overlay {
+  background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 40%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.group:hover .product-card-image-overlay {
+  opacity: 1;
 }
